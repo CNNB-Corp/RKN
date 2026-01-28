@@ -114,7 +114,8 @@
     ],
     "OptionalHttpTestUrls": [
       "https://www.msftconnecttest.com/connecttest.txt",
-      "https://www.apple.com/library/test/success.html"
+      "https://www.apple.com/library/test/success.html",
+      "https://api.openai.com/v1/models"
     ],
     "HttpRequireAll": false,
     "HttpTimeoutSec": 6,
@@ -123,7 +124,8 @@
       "8.8.8.8",
       "9.9.9.9",
       "www.microsoft.com",
-      "www.apple.com"
+      "www.apple.com",
+      "api.openai.com"
     ],
     "TcpTestTargets": [
       {
@@ -140,6 +142,10 @@
       },
       {
         "Host": "www.apple.com",
+        "Port": 443
+      },
+      {
+        "Host": "api.openai.com",
         "Port": 443
       }
     ],
