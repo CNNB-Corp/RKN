@@ -35,6 +35,8 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 build.cmd
 ```
 
+> Скрипт сборки рассчитан на стандартный `csc.exe` из .NET Framework (C# 5), поэтому лаунчер написан без интерполяции строк.
+
 3. Скопируйте `RKN.exe` в корень проекта рядом с `RKN.ps1`.
 4. Запускайте `RKN.exe` (скрипт будет стартовать автоматически).
 
