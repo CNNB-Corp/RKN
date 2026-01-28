@@ -189,7 +189,7 @@ function Apply-DnsConfiguration {
 
     foreach ($adapter in $Adapters) {
         Set-DnsClientServerAddress -InterfaceIndex $adapter.InterfaceIndex -ServerAddresses $Selected.Servers
-        Write-Log "Применены DNS ${$Selected.Name} для $($adapter.Name)."
+        Write-Log "Применены DNS $($Selected.Name) для $($adapter.Name)."
     }
 }
 
