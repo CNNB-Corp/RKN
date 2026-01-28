@@ -1,0 +1,45 @@
+{
+  "Basic": {
+    "TargetDomains": [
+      "youtube.com",
+      "discord.com"
+    ],
+    "AdapterPattern": "Ethernet|Wi-Fi"
+  },
+  "Advanced": {
+    "DnsCandidates": [
+      {
+        "Name": "Cloudflare",
+        "Servers": [
+          "1.1.1.1",
+          "1.0.0.1"
+        ]
+      },
+      {
+        "Name": "Google",
+        "Servers": [
+          "8.8.8.8",
+          "8.8.4.4"
+        ]
+      },
+      {
+        "Name": "Quad9",
+        "Servers": [
+          "9.9.9.9",
+          "149.112.112.112"
+        ]
+      }
+    ],
+    "TestAttempts": 2,
+    "HttpTestUrls": [
+      "https://www.youtube.com/generate_204",
+      "https://discord.com/api/v9/gateway"
+    ],
+    "HttpTimeoutSec": 6,
+    "RetryDelaySec": 2,
+    "LogPath": "logs/rkn.log"
+  },
+  "Ui": {
+    "UseColor": true
+  }
+}
