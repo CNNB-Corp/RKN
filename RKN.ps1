@@ -137,9 +137,11 @@ function Test-DnsCandidate {
 
 function Rank-DnsCandidates {
     $config = Get-Config
-    foreach ($candidate in $config.Advanced.DnsCandidates) {
+    $results = foreach ($candidate in $config.Advanced.DnsCandidates) {
         Test-DnsCandidate -Candidate $candidate -TargetDomains $config.Basic.TargetDomains -Attempts $config.Advanced.TestAttempts
-    } | Sort-Object -Property @{Expression = 'SuccessRate'; Descending = $true}, @{Expression = 'AvgLatencyMs'; Descending = $false}
+    }
+
+    $results | Sort-Object -Property @{Expression = 'SuccessRate'; Descending = $true}, @{Expression = 'AvgLatencyMs'; Descending = $false}
 }
 
 function Test-HttpEndpoint {
