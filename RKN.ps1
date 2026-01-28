@@ -117,7 +117,7 @@ function Test-DnsCandidate {
                     Resolve-DnsName -Name $domain -Server $Candidate.Servers[0] -Type A -ErrorAction Stop | Out-Null
                     $successCount += 1
                 } catch {
-                    Write-Log "DNS ${$Candidate.Name} не ответил для $domain." 'WARN'
+                    Write-Log "DNS $($Candidate.Name) не ответил для $domain." 'WARN'
                 }
             }
             $totalDuration += $duration.TotalMilliseconds
