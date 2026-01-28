@@ -108,9 +108,11 @@
       }
     ],
     "TestAttempts": 2,
-    "HttpTestUrls": [
+    "RequiredHttpTestUrls": [
       "https://www.youtube.com/generate_204",
-      "https://discord.com/api/v9/gateway",
+      "https://discord.com/api/v9/gateway"
+    ],
+    "OptionalHttpTestUrls": [
       "https://www.msftconnecttest.com/connecttest.txt",
       "https://www.apple.com/library/test/success.html"
     ],

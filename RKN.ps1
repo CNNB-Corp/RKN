@@ -205,18 +205,27 @@ function Test-TcpTargets {
 
 function Test-Connectivity {
     param(
-        [string[]]$Urls,
+        [string[]]$RequiredUrls,
+        [string[]]$OptionalUrls,
         [string[]]$PingTargets,
         [object[]]$TcpTargets,
         [int]$TimeoutSec = 6,
         [bool]$RequireAll = $false
     )
 
+    if ($RequiredUrls -and $RequiredUrls.Count -gt 0) {
+        foreach ($url in $RequiredUrls) {
+            if (-not (Test-HttpEndpoint -Url $url -TimeoutSec $TimeoutSec)) {
+                return $false
+            }
+        }
+    }
+
     $results = @()
 
-    if ($Urls -and $Urls.Count -gt 0) {
+    if ($OptionalUrls -and $OptionalUrls.Count -gt 0) {
         $anyHttp = $false
-        foreach ($url in $Urls) {
+        foreach ($url in $OptionalUrls) {
             if (Test-HttpEndpoint -Url $url -TimeoutSec $TimeoutSec) {
                 $anyHttp = $true
                 break
@@ -372,7 +381,7 @@ function Start-Rkn {
         Apply-DnsConfiguration -Selected $candidate -Adapters $adapters
         Start-Sleep -Seconds 1
 
-        $isReachable = Test-Connectivity -Urls $config.Advanced.HttpTestUrls -PingTargets $config.Advanced.PingTargets -TcpTargets $config.Advanced.TcpTestTargets -TimeoutSec $config.Advanced.HttpTimeoutSec -RequireAll $config.Advanced.HttpRequireAll
+        $isReachable = Test-Connectivity -RequiredUrls $config.Advanced.RequiredHttpTestUrls -OptionalUrls $config.Advanced.OptionalHttpTestUrls -PingTargets $config.Advanced.PingTargets -TcpTargets $config.Advanced.TcpTestTargets -TimeoutSec $config.Advanced.HttpTimeoutSec -RequireAll $config.Advanced.HttpRequireAll
         if ($isReachable) {
             Save-State -State ([PSCustomObject]@{
                 Selected = $candidate
