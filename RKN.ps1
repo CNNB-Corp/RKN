@@ -188,15 +188,15 @@ function Test-TcpTargets {
     )
 
     foreach ($target in $Targets) {
-        $host = $target.Host
+        $targetHost = $target.Host
         $port = $target.Port
         try {
-            $result = Test-NetConnection -ComputerName $host -Port $port -InformationLevel Quiet -WarningAction SilentlyContinue
+            $result = Test-NetConnection -ComputerName $targetHost -Port $port -InformationLevel Quiet -WarningAction SilentlyContinue
             if ($result) {
                 return $true
             }
         } catch {
-            Write-Log "TCP проверка не прошла для ${host}:$port. $_" 'WARN'
+            Write-Log "TCP проверка не прошла для ${targetHost}:$port. $_" 'WARN'
         }
     }
 
