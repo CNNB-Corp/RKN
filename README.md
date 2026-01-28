@@ -63,4 +63,6 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\RKN.ps1
 - `Advanced.PingTargets` задаёт хосты/IP для ping-проверки.
 - `Advanced.TcpTestTargets` задаёт TCP-проверки (host/port), чтобы подтвердить доступность сервисов.
 
+> Примечание: Apple/Microsoft/OpenAI не публикуют отдельные публичные DNS-резолверы. Если у вас есть конкретные IP их корпоративных DNS, добавьте их в `Advanced.DnsCandidates`.
+
 > Скрипт сохраняет предыдущие DNS-настройки в `config/rkn.state.json`, чтобы корректно восстановить их при остановке.
