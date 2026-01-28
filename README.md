@@ -61,7 +61,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\RKN.ps1
 - В `Advanced.OptionalHttpTestUrls` можно указать дополнительные URL (например, Microsoft/Apple/OpenAI — msftconnecttest, apple robots), которые дополняют проверку.
 - Параметр `Advanced.HttpRequireAll` определяет логику проверки дополнительных тестов: `false` — достаточно успеха хотя бы по одному из включенных тестов, `true` — все типы проверок должны пройти.
 - `Advanced.PingTargets` задаёт хосты/IP для ping-проверки.
-- `Advanced.TcpTestTargets` задаёт TCP-проверки (host/port), чтобы подтвердить доступность сервисов.
+- `Advanced.TcpTestTargets` задаёт TCP-проверки (host/port), чтобы подтвердить доступность сервисов (по умолчанию — только YouTube/Discord).
 
 > Примечание: Apple/Microsoft/OpenAI не публикуют отдельные публичные DNS-резолверы. Если у вас есть конкретные IP их корпоративных DNS, добавьте их в `Advanced.DnsCandidates`.
 
