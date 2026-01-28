@@ -58,5 +58,6 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\RKN.ps1
 - Базовые настройки доступны из меню.
 - Гибкие настройки открывают `config/rkn.settings.json` в блокноте.
 - В `Advanced.HttpTestUrls` можно заменить проверяемые URL, если нужны другие сервисы.
+- Параметр `Advanced.HttpRequireAll` определяет логику проверки: `false` — достаточно успеха хотя бы по одному URL.
 
 > Скрипт сохраняет предыдущие DNS-настройки в `config/rkn.state.json`, чтобы корректно восстановить их при остановке.

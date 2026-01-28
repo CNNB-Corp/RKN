@@ -35,6 +35,7 @@
       "https://www.youtube.com/generate_204",
       "https://discord.com/api/v9/gateway"
     ],
+    "HttpRequireAll": false,
     "HttpTimeoutSec": 6,
     "RetryDelaySec": 2,
     "LogPath": "logs/rkn.log"

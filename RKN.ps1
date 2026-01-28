@@ -167,16 +167,29 @@ function Test-Connectivity {
     param(
         [Parameter(Mandatory)]
         [string[]]$Urls,
-        [int]$TimeoutSec = 6
+        [int]$TimeoutSec = 6,
+        [bool]$RequireAll = $false
     )
 
+    if (-not $Urls -or $Urls.Count -eq 0) {
+        return $true
+    }
+
+    $anySuccess = $false
     foreach ($url in $Urls) {
-        if (-not (Test-HttpEndpoint -Url $url -TimeoutSec $TimeoutSec)) {
+        $isOk = Test-HttpEndpoint -Url $url -TimeoutSec $TimeoutSec
+        if ($isOk) {
+            $anySuccess = $true
+        } elseif ($RequireAll) {
             return $false
         }
     }
 
-    return $true
+    if ($RequireAll) {
+        return $true
+    }
+
+    return $anySuccess
 }
 
 function Apply-DnsConfiguration {
@@ -297,7 +310,7 @@ function Start-Rkn {
         Apply-DnsConfiguration -Selected $candidate -Adapters $adapters
         Start-Sleep -Seconds 1
 
-        $isReachable = Test-Connectivity -Urls $config.Advanced.HttpTestUrls -TimeoutSec $config.Advanced.HttpTimeoutSec
+        $isReachable = Test-Connectivity -Urls $config.Advanced.HttpTestUrls -TimeoutSec $config.Advanced.HttpTimeoutSec -RequireAll $config.Advanced.HttpRequireAll
         if ($isReachable) {
             Save-State -State ([PSCustomObject]@{
                 Selected = $candidate
