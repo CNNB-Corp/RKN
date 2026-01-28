@@ -163,30 +163,92 @@ function Test-HttpEndpoint {
     return $false
 }
 
+function Test-PingTargets {
+    param(
+        [string[]]$Targets,
+        [int]$TimeoutSec = 2
+    )
+
+    foreach ($target in $Targets) {
+        try {
+            if (Test-Connection -ComputerName $target -Count 1 -TimeoutSeconds $TimeoutSec -Quiet -ErrorAction Stop) {
+                return $true
+            }
+        } catch {
+            Write-Log "Ping проверка не прошла для $target. $_" 'WARN'
+        }
+    }
+
+    return $false
+}
+
+function Test-TcpTargets {
+    param(
+        [object[]]$Targets
+    )
+
+    foreach ($target in $Targets) {
+        $host = $target.Host
+        $port = $target.Port
+        try {
+            $result = Test-NetConnection -ComputerName $host -Port $port -InformationLevel Quiet -WarningAction SilentlyContinue
+            if ($result) {
+                return $true
+            }
+        } catch {
+            Write-Log "TCP проверка не прошла для ${host}:$port. $_" 'WARN'
+        }
+    }
+
+    return $false
+}
+
 function Test-Connectivity {
     param(
-        [Parameter(Mandatory)]
         [string[]]$Urls,
+        [string[]]$PingTargets,
+        [object[]]$TcpTargets,
         [int]$TimeoutSec = 6,
         [bool]$RequireAll = $false
     )
 
-    if (-not $Urls -or $Urls.Count -eq 0) {
+    $results = @()
+
+    if ($Urls -and $Urls.Count -gt 0) {
+        $anyHttp = $false
+        foreach ($url in $Urls) {
+            if (Test-HttpEndpoint -Url $url -TimeoutSec $TimeoutSec) {
+                $anyHttp = $true
+                break
+            }
+        }
+        $results += $anyHttp
+    }
+
+    if ($PingTargets -and $PingTargets.Count -gt 0) {
+        $results += (Test-PingTargets -Targets $PingTargets -TimeoutSec $TimeoutSec)
+    }
+
+    if ($TcpTargets -and $TcpTargets.Count -gt 0) {
+        $results += (Test-TcpTargets -Targets $TcpTargets)
+    }
+
+    if ($results.Count -eq 0) {
         return $true
     }
 
     $anySuccess = $false
-    foreach ($url in $Urls) {
-        $isOk = Test-HttpEndpoint -Url $url -TimeoutSec $TimeoutSec
-        if ($isOk) {
+    $allSuccess = $true
+    foreach ($result in $results) {
+        if ($result) {
             $anySuccess = $true
-        } elseif ($RequireAll) {
-            return $false
+        } else {
+            $allSuccess = $false
         }
     }
 
     if ($RequireAll) {
-        return $true
+        return $allSuccess
     }
 
     return $anySuccess
@@ -310,7 +372,7 @@ function Start-Rkn {
         Apply-DnsConfiguration -Selected $candidate -Adapters $adapters
         Start-Sleep -Seconds 1
 
-        $isReachable = Test-Connectivity -Urls $config.Advanced.HttpTestUrls -TimeoutSec $config.Advanced.HttpTimeoutSec -RequireAll $config.Advanced.HttpRequireAll
+        $isReachable = Test-Connectivity -Urls $config.Advanced.HttpTestUrls -PingTargets $config.Advanced.PingTargets -TcpTargets $config.Advanced.TcpTestTargets -TimeoutSec $config.Advanced.HttpTimeoutSec -RequireAll $config.Advanced.HttpRequireAll
         if ($isReachable) {
             Save-State -State ([PSCustomObject]@{
                 Selected = $candidate
@@ -322,7 +384,7 @@ function Start-Rkn {
             return
         }
 
-        Write-Log "Кандидат $($candidate.Name) не прошел HTTP-проверку." 'WARN'
+        Write-Log "Кандидат $($candidate.Name) не прошел проверку подключения." 'WARN'
         Restore-DnsConfiguration -Snapshot $snapshot
         Start-Sleep -Seconds $config.Advanced.RetryDelaySec
     }

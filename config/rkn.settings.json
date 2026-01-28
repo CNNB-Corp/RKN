@@ -16,6 +16,13 @@
         ]
       },
       {
+        "Name": "Cloudflare Family",
+        "Servers": [
+          "1.1.1.2",
+          "1.0.0.2"
+        ]
+      },
+      {
         "Name": "Google",
         "Servers": [
           "8.8.8.8",
@@ -28,15 +35,112 @@
           "9.9.9.9",
           "149.112.112.112"
         ]
+      },
+      {
+        "Name": "OpenDNS",
+        "Servers": [
+          "208.67.222.222",
+          "208.67.220.220"
+        ]
+      },
+      {
+        "Name": "AdGuard",
+        "Servers": [
+          "94.140.14.14",
+          "94.140.15.15"
+        ]
+      },
+      {
+        "Name": "CleanBrowsing",
+        "Servers": [
+          "185.228.168.9",
+          "185.228.169.9"
+        ]
+      },
+      {
+        "Name": "Comodo Secure",
+        "Servers": [
+          "8.26.56.26",
+          "8.20.247.20"
+        ]
+      },
+      {
+        "Name": "DNS.Watch",
+        "Servers": [
+          "84.200.69.80",
+          "84.200.70.40"
+        ]
+      },
+      {
+        "Name": "Level3",
+        "Servers": [
+          "4.2.2.1",
+          "4.2.2.2"
+        ]
+      },
+      {
+        "Name": "Verisign",
+        "Servers": [
+          "64.6.64.6",
+          "64.6.65.6"
+        ]
+      },
+      {
+        "Name": "Alternate DNS",
+        "Servers": [
+          "76.76.19.19",
+          "76.223.122.150"
+        ]
+      },
+      {
+        "Name": "UltraDNS",
+        "Servers": [
+          "156.154.70.1",
+          "156.154.71.1"
+        ]
+      },
+      {
+        "Name": "Yandex",
+        "Servers": [
+          "77.88.8.8",
+          "77.88.8.1"
+        ]
       }
     ],
     "TestAttempts": 2,
     "HttpTestUrls": [
       "https://www.youtube.com/generate_204",
-      "https://discord.com/api/v9/gateway"
+      "https://discord.com/api/v9/gateway",
+      "https://www.msftconnecttest.com/connecttest.txt",
+      "https://www.apple.com/library/test/success.html"
     ],
     "HttpRequireAll": false,
     "HttpTimeoutSec": 6,
+    "PingTargets": [
+      "1.1.1.1",
+      "8.8.8.8",
+      "9.9.9.9",
+      "www.microsoft.com",
+      "www.apple.com"
+    ],
+    "TcpTestTargets": [
+      {
+        "Host": "discord.com",
+        "Port": 443
+      },
+      {
+        "Host": "www.youtube.com",
+        "Port": 443
+      },
+      {
+        "Host": "www.microsoft.com",
+        "Port": 443
+      },
+      {
+        "Host": "www.apple.com",
+        "Port": 443
+      }
+    ],
     "RetryDelaySec": 2,
     "LogPath": "logs/rkn.log"
   },
