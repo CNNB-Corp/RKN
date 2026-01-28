@@ -114,7 +114,9 @@
     ],
     "OptionalHttpTestUrls": [
       "https://www.msftconnecttest.com/connecttest.txt",
+      "https://www.msftconnecttest.com/redirect",
       "https://www.apple.com/library/test/success.html",
+      "https://www.apple.com/robots.txt",
       "https://api.openai.com/v1/models"
     ],
     "HttpRequireAll": false,

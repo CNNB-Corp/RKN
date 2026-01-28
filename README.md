@@ -58,7 +58,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\RKN.ps1
 - Базовые настройки доступны из меню.
 - Гибкие настройки открывают `config/rkn.settings.json` в блокноте.
 - В `Advanced.RequiredHttpTestUrls` указываются обязательные HTTP-проверки (например, YouTube/Discord). Если хотя бы одна из них не проходит, кандидат отклоняется.
-- В `Advanced.OptionalHttpTestUrls` можно указать дополнительные URL (например, Microsoft/Apple/OpenAI), которые дополняют проверку.
+- В `Advanced.OptionalHttpTestUrls` можно указать дополнительные URL (например, Microsoft/Apple/OpenAI — msftconnecttest, apple robots), которые дополняют проверку.
 - Параметр `Advanced.HttpRequireAll` определяет логику проверки дополнительных тестов: `false` — достаточно успеха хотя бы по одному из включенных тестов, `true` — все типы проверок должны пройти.
 - `Advanced.PingTargets` задаёт хосты/IP для ping-проверки.
 - `Advanced.TcpTestTargets` задаёт TCP-проверки (host/port), чтобы подтвердить доступность сервисов.
